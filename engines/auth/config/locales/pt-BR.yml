@@ -1,0 +1,25 @@
+pt-BR:
+  error_messages:
+    username_not_informed:
+      message: "O nome de usuário deve ser informado"
+      internal_message: "username not informed"
+
+    email_not_informed:
+      message: "O email deve ser informado"
+      internal_message: "email not informed"
+
+    exists_email:
+      message: "Este email ja esta cadastrado em nosso sistema"
+      internal_message: "exists email"
+    
+    exists_username:
+      message: "Este nome de usuário ja esta cadastrado em nosso sistema"
+      internal_message: "exists username"
+    
+    password_not_informed:
+      message: "A senha deverá ser informada"
+      internal_message: "password not informed"
+
+    invalid_password:
+      message: "Senha inválida"
+      internal_message: "invalid password"

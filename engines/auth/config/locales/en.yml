@@ -1,0 +1,25 @@
+en:
+  error_messages:
+    username_not_informed:
+      message: "The username must be informed"
+      internal_message: "username not informed"
+  
+    email_not_informed:
+      message: "The email must be informed"
+      internal_message: "email not informed"
+    
+    exists_email:
+      message: "This e-mail is already registered in our system"
+      internal_message: "exists email"
+    
+    exists_username:
+      message: "This username is already registered in our system"
+      internal_message: "exists username"
+    
+    password_not_informed:
+      message: "The password must be informed"
+      internal_message: "password not informed"
+
+    invalid_password:
+      message: "Invalid password"
+      internal_message: "invalid password"

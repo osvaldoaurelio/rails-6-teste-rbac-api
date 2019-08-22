@@ -1,0 +1,5597 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "API V1",
+    "version": "v1"
+  },
+  "paths": {
+    "/auth/v1/users/register": {
+      "post": {
+        "summary": "Create a User",
+        "tags": [
+          "Auth"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Create a User",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "auth": {
+                  "type": "object",
+                  "properties": {
+                    "email": {
+                      "type": "string",
+                      "example": "pedro123@gmail.com"
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "Pedro"
+                    },
+                    "birthday": {
+                      "type": "string",
+                      "example": "1989-10-10"
+                    },
+                    "password": {
+                      "type": "string",
+                      "example": "123456"
+                    }
+                  },
+                  "required": [
+                    "email",
+                    "name",
+                    "birthday",
+                    "password"
+                  ]
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "User create",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/people_object"
+                  }
+                }
+              },
+              "required": [
+                "data"
+              ]
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          }
+        }
+      }
+    },
+    "/auth/v1/users/login": {
+      "post": {
+        "summary": "Login API",
+        "tags": [
+          "Auth"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Login in API",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "auth": {
+                  "type": "object",
+                  "properties": {
+                    "username": {
+                      "type": "string",
+                      "example": "pedro123@gmail.com"
+                    },
+                    "password": {
+                      "type": "string",
+                      "example": "123456"
+                    }
+                  },
+                  "required": [
+                    "username",
+                    "password"
+                  ]
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Login Successful",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "jwt": {
+                  "type": "string",
+                  "example": "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiMTI9OGI0OTYtYjk3NC00YWM10LWFiZGEtODlhZjZmYWUwMjgxIn0"
+                },
+                "id": {
+                  "type": "string",
+                  "example": "ad054857-3de0-484a-9c01-180344c00985"
+                }
+              },
+              "required": [
+                "jwt"
+              ]
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          }
+        }
+      }
+    },
+    "/experience/v1/comments/{id}": {
+      "put": {
+        "summary": "Update a Comment",
+        "tags": [
+          "Comments"
+        ],
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Update a Comment",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "description": "comment id",
+            "required": true
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "comment": {
+                  "type": "object",
+                  "properties": {
+                    "text": {
+                      "type": "string",
+                      "example": "Comment"
+                    }
+                  },
+                  "required": [
+                    "text"
+                  ]
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Comment update",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/comment_objects"
+                  }
+                }
+              },
+              "required": [
+                "data"
+              ]
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "404": {
+            "description": "Comment Not Found",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "422": {
+            "description": "Entity error",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a Comment",
+        "tags": [
+          "Comments"
+        ],
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Delete a Comment",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "description": "comment id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Comment delete"
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "404": {
+            "description": "Comment Not Found",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          }
+        }
+      }
+    },
+    "/experience/v1/implementations/{id}": {
+      "put": {
+        "summary": "Update a Implementation",
+        "tags": [
+          "Implementations"
+        ],
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Update a Comment",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "description": "implementation id",
+            "required": true
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "implementation": {
+                  "type": "object",
+                  "properties": {
+                    "date_implementation": {
+                      "type": "string",
+                      "example": "2019-01-15"
+                    },
+                    "place_implementation": {
+                      "type": "string",
+                      "example": "MIT"
+                    },
+                    "number_participants": {
+                      "type": "integer",
+                      "example": 10
+                    },
+                    "description": {
+                      "type": "string",
+                      "example": "Implementação em classe"
+                    },
+                    "person_ids": {
+                      "type": "array",
+                      "example": [
+                        "3b11f1db-e8c2-4379-beb7-0ba7f993e23a"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Implementation update",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/implementation_objects"
+                  }
+                }
+              },
+              "required": [
+                "data"
+              ]
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "404": {
+            "description": "Implementation Not Found",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "422": {
+            "description": "Entity error",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a Implementation",
+        "tags": [
+          "Implementations"
+        ],
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Delete a Implementation",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "description": "implementation id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Implementation delete"
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "404": {
+            "description": "Implementation Not Found",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          }
+        }
+      }
+    },
+    "/gallery/v1/activities/": {
+      "get": {
+        "summary": "Get Activities",
+        "tags": [
+          "Activities"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Get Activities",
+        "parameters": [
+          {
+            "name": "per",
+            "in": "query",
+            "type": "integer",
+            "description": "results per page",
+            "default": 10,
+            "required": false
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "type": "integer",
+            "description": "page",
+            "default": 1,
+            "required": false
+          },
+          {
+            "name": "global",
+            "in": "query",
+            "type": "string",
+            "description": "Search global fields",
+            "required": false
+          },
+          {
+            "name": "scope_ids",
+            "in": "query",
+            "type": "string",
+            "description": "Search by scope, scope_ids=id1,id2",
+            "required": false
+          },
+          {
+            "name": "author_ids",
+            "in": "query",
+            "type": "string",
+            "description": "Search by author, author_ids=id1,id2",
+            "required": false
+          },
+          {
+            "name": "license_ids",
+            "in": "query",
+            "type": "string",
+            "description": "Search by license, license_ids=id1,id2",
+            "required": false
+          },
+          {
+            "name": "audience_ids",
+            "in": "query",
+            "type": "string",
+            "description": "Search by audience, audience_ids=id1,id2",
+            "required": false
+          },
+          {
+            "name": "space_type_ids",
+            "in": "query",
+            "type": "string",
+            "description": "Search by space type, space_type_ids=id1,id2",
+            "required": false
+          },
+          {
+            "name": "activity_type",
+            "in": "query",
+            "type": "array",
+            "description": "Search by activity type",
+            "required": false,
+            "items": {
+              "type": "string",
+              "enum": [
+                "internal",
+                "external"
+              ],
+              "default": "internal"
+            }
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "type": "array",
+            "description": "Sort query by order param",
+            "required": false,
+            "items": {
+              "type": "string",
+              "enum": [
+                "title ASC",
+                "title DESC",
+                "updated_at DESC",
+                "total_favorites DESC",
+                "total_implementations DESC",
+                "total_remixes DESC"
+              ],
+              "default": "title ASC"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Activities found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/activities_object"
+                  }
+                },
+                "links": {
+                  "type": "object",
+                  "properties": {
+                    "self": {
+                      "type": "string",
+                      "format": "url",
+                      "example": "//gallery/v1/activities?page[number]=1&page[size]=10"
+                    },
+                    "first": {
+                      "type": "string",
+                      "format": "url",
+                      "example": "//gallery/v1/activities?page[number]=1&page[size]=10"
+                    },
+                    "prev": {
+                      "type": "string",
+                      "format": "url",
+                      "example": null
+                    },
+                    "next": {
+                      "type": "string",
+                      "format": "url",
+                      "example": "//gallery/v1/activities?page[number]=2&page[size]=10"
+                    },
+                    "last": {
+                      "type": "string",
+                      "format": "url",
+                      "example": "//gallery/v1/activities?page[number]=10&page[size]=10"
+                    }
+                  },
+                  "required": [
+                    "self",
+                    "first",
+                    "last"
+                  ]
+                },
+                "meta": {
+                  "$ref": "#/definitions/meta_pagination_object"
+                }
+              },
+              "required": [
+                "data",
+                "links",
+                "meta"
+              ]
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          }
+        }
+      }
+    },
+    "/gallery/v1/activities/{id}": {
+      "get": {
+        "summary": "Get a Activity",
+        "tags": [
+          "Activities"
+        ],
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Get a Activity",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "description": "activity id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Activity found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/activities_object"
+                  }
+                }
+              },
+              "required": [
+                "data"
+              ]
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "404": {
+            "description": "Activity Not Found",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Update a Activity",
+        "tags": [
+          "Activities"
+        ],
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Update a Activity",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "description": "activity id",
+            "required": true
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "activity": {
+                  "type": "object",
+                  "properties": {
+                    "title": {
+                      "type": "string",
+                      "example": "Atividade"
+                    },
+                    "caption": {
+                      "type": "string",
+                      "example": "Atividade em sala"
+                    },
+                    "description": {
+                      "type": "string",
+                      "example": "primeira atividade em sala de aula"
+                    },
+                    "motivation": {
+                      "type": "string",
+                      "example": "Ensinamentos basicos"
+                    },
+                    "powerful_ideas": {
+                      "type": "string",
+                      "example": "Ideias"
+                    },
+                    "products": {
+                      "type": "string",
+                      "example": "Produtos"
+                    },
+                    "requirements": {
+                      "type": "string",
+                      "example": "Inglês"
+                    },
+                    "published": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "version_history": {
+                      "type": "string",
+                      "example": "1.0"
+                    },
+                    "copyright": {
+                      "type": "string",
+                      "example": "rbac"
+                    },
+                    "space_organization": {
+                      "type": "string",
+                      "example": "Precisa de projetor para realizar a atividade"
+                    },
+                    "implementation_steps": {
+                      "type": "string",
+                      "example": "Primeiramente ler a apostila pagina 2"
+                    },
+                    "implementation_tips": {
+                      "type": "string",
+                      "example": "Realizar a atividade durante o dia"
+                    },
+                    "reflection_assessment": {
+                      "type": "string",
+                      "example": "Avaliar o comportamento do aluno"
+                    },
+                    "duration": {
+                      "type": "string",
+                      "example": "cerca de 30 minutos"
+                    },
+                    "references": {
+                      "type": "string",
+                      "example": "Referências bibliograficas"
+                    },
+                    "is_abac_author": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "external_link": {
+                      "type": "string",
+                      "example": "https://scholar.google.com.br/"
+                    },
+                    "external_authors": {
+                      "type": "array",
+                      "example": [
+                        "Pedro",
+                        "João da silva",
+                        "Osvaldo"
+                      ]
+                    },
+                    "activity_type": {
+                      "type": "string",
+                      "description": "Activity type",
+                      "enum": [
+                        "internal",
+                        "external"
+                      ],
+                      "default": "internal"
+                    },
+                    "license_id": {
+                      "type": "string",
+                      "example": "c6a92130-6d30-42f6-93c0-245acf360152"
+                    },
+                    "scope_ids": {
+                      "type": "array",
+                      "example": [
+                        "c6a92130-6d30-42f6-93c0-245acf360152"
+                      ]
+                    },
+                    "audience_ids": {
+                      "type": "array",
+                      "example": [
+                        "3b11f1db-e8c2-4379-beb7-0ba7f993e23a",
+                        "93f8345c-3e87-4485-9dfb-2a1102252020"
+                      ]
+                    },
+                    "person_ids": {
+                      "type": "array",
+                      "example": [
+                        "3b11f1db-e8c2-4379-beb7-0ba7f993e23a"
+                      ]
+                    },
+                    "space_type_ids": {
+                      "type": "array",
+                      "example": [
+                        "df1f4ff2-c167-44b9-9b3d-50d51e909e2d"
+                      ]
+                    },
+                    "specific_materials": {
+                      "type": "string",
+                      "example": "Cola e tesoura sem ponta"
+                    },
+                    "general_materials": {
+                      "type": "array",
+                      "example": [
+                        {
+                          "id": "9c65a353-497a-42ed-9631-38f68c6862b0",
+                          "quantity": 11
+                        }
+                      ]
+                    },
+                    "image": {
+                      "type": "string",
+                      "example": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP0Y/hfDwADvwHOEMGxZAAAAABJRU5ErkJggg=="
+                    },
+                    "inspirations_ids": {
+                      "type": "array",
+                      "example": [
+                        "819d249c-e536-43df-b688-1b9ca72eec72"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "title",
+                    "caption",
+                    "description",
+                    "motivation",
+                    "powerful_ideas",
+                    "products",
+                    "requirements",
+                    "published",
+                    "version_history",
+                    "copyright",
+                    "space_organization",
+                    "duration",
+                    "implementation_stepsscope_ids",
+                    "audience_ids",
+                    "person_ids",
+                    "space_type_ids",
+                    "general_materials"
+                  ]
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Activity update",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/activities_object"
+                  }
+                }
+              },
+              "required": [
+                "data"
+              ]
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "404": {
+            "description": "Activity Not Found",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "422": {
+            "description": "Entity error",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a Activity",
+        "tags": [
+          "Activities"
+        ],
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Delete a Activity",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "description": "activity id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Activity delete",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "404": {
+            "description": "Activity Not Found",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          }
+        }
+      }
+    },
+    "/gallery/v1/activities/{id}/pdf": {
+      "get": {
+        "summary": "Get a Activity PDF",
+        "tags": [
+          "Activities"
+        ],
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Get a Activity File PDF for download",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "description": "activity id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Activity File PDF create",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "url": {
+                  "type": "string",
+                  "example": "www.domain.com/172735e6-46e1-4946-b082-d486069c4f91.pdf"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "404": {
+            "description": "Activity Not Found",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          }
+        }
+      }
+    },
+    "/gallery/v1/activities": {
+      "post": {
+        "summary": "Create a Activity",
+        "tags": [
+          "Activities"
+        ],
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Create a Activity",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "activity": {
+                  "type": "object",
+                  "properties": {
+                    "title": {
+                      "type": "string",
+                      "example": "Atividade"
+                    },
+                    "caption": {
+                      "type": "string",
+                      "example": "Atividade em sala"
+                    },
+                    "description": {
+                      "type": "string",
+                      "example": "primeira atividade em sala de aula"
+                    },
+                    "motivation": {
+                      "type": "string",
+                      "example": "Ensinamentos basicos"
+                    },
+                    "powerful_ideas": {
+                      "type": "string",
+                      "example": "Ideias"
+                    },
+                    "products": {
+                      "type": "string",
+                      "example": "Produtos"
+                    },
+                    "requirements": {
+                      "type": "string",
+                      "example": "Inglês"
+                    },
+                    "published": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "version_history": {
+                      "type": "string",
+                      "example": "1.0"
+                    },
+                    "copyright": {
+                      "type": "string",
+                      "example": "rbac"
+                    },
+                    "space_organization": {
+                      "type": "string",
+                      "example": "Precisa de projetor para realizar a atividade"
+                    },
+                    "implementation_steps": {
+                      "type": "string",
+                      "example": "Primeiramente ler a apostila pagina 2"
+                    },
+                    "implementation_tips": {
+                      "type": "string",
+                      "example": "Realizar a atividade durante o dia"
+                    },
+                    "reflection_assessment": {
+                      "type": "string",
+                      "example": "Avaliar o comportamento do aluno"
+                    },
+                    "duration": {
+                      "type": "string",
+                      "example": "cerca de 30 minutos"
+                    },
+                    "references": {
+                      "type": "string",
+                      "example": "Referências bibliograficas"
+                    },
+                    "is_abac_author": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "external_link": {
+                      "type": "string",
+                      "example": "https://scholar.google.com.br/"
+                    },
+                    "external_authors": {
+                      "type": "array",
+                      "example": [
+                        "Pedro",
+                        "João da silva",
+                        "Osvaldo"
+                      ]
+                    },
+                    "activity_type": {
+                      "type": "string",
+                      "description": "Activity type",
+                      "enum": [
+                        "internal",
+                        "external"
+                      ],
+                      "default": "internal"
+                    },
+                    "license_id": {
+                      "type": "string",
+                      "example": "c6a92130-6d30-42f6-93c0-245acf360152"
+                    },
+                    "scope_ids": {
+                      "type": "array",
+                      "example": [
+                        "c6a92130-6d30-42f6-93c0-245acf360152"
+                      ]
+                    },
+                    "audience_ids": {
+                      "type": "array",
+                      "example": [
+                        "3b11f1db-e8c2-4379-beb7-0ba7f993e23a",
+                        "93f8345c-3e87-4485-9dfb-2a1102252020"
+                      ]
+                    },
+                    "person_ids": {
+                      "type": "array",
+                      "example": [
+                        "3b11f1db-e8c2-4379-beb7-0ba7f993e23a"
+                      ]
+                    },
+                    "space_type_ids": {
+                      "type": "array",
+                      "example": [
+                        "df1f4ff2-c167-44b9-9b3d-50d51e909e2d"
+                      ]
+                    },
+                    "specific_materials": {
+                      "type": "string",
+                      "example": "Cola e tesoura sem ponta"
+                    },
+                    "general_materials": {
+                      "type": "array",
+                      "example": [
+                        {
+                          "id": "9c65a353-497a-42ed-9631-38f68c6862b0",
+                          "quantity": 11
+                        }
+                      ]
+                    },
+                    "image": {
+                      "type": "string",
+                      "example": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP0Y/hfDwADvwHOEMGxZAAAAABJRU5ErkJggg=="
+                    },
+                    "inspirations_ids": {
+                      "type": "array",
+                      "example": [
+                        "819d249c-e536-43df-b688-1b9ca72eec72"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "title",
+                    "caption",
+                    "description",
+                    "motivation",
+                    "powerful_ideas",
+                    "products",
+                    "requirements",
+                    "published",
+                    "version_history",
+                    "copyright",
+                    "space_organization",
+                    "duration",
+                    "implementation_stepsscope_ids",
+                    "audience_ids",
+                    "person_ids",
+                    "space_type_ids",
+                    "general_materials"
+                  ]
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Activity create",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/activities_object"
+                  }
+                }
+              },
+              "required": [
+                "data"
+              ]
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "422": {
+            "description": "Entity error",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          }
+        }
+      }
+    },
+    "/gallery/v1/activities/{id}/like": {
+      "get": {
+        "summary": "Like a activity",
+        "tags": [
+          "Activities"
+        ],
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Like or unlike, a activity",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "description": "activity id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "liked or unliked",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/activities_object"
+                  }
+                }
+              },
+              "required": [
+                "data"
+              ]
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "404": {
+            "description": "Activity Not Found",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          }
+        }
+      }
+    },
+    "/gallery/v1/activities/{id}/favorite": {
+      "get": {
+        "summary": "Favorite a activity",
+        "tags": [
+          "Activities"
+        ],
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Favorite a activity",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "description": "activity id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Favorited",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/activities_object"
+                  }
+                }
+              },
+              "required": [
+                "data"
+              ]
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "404": {
+            "description": "Activity Not Found",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          }
+        }
+      }
+    },
+    "/gallery/v1/activities/{id}/remix": {
+      "post": {
+        "summary": "Remix a Activity",
+        "tags": [
+          "Activities"
+        ],
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Remix a Activity",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "description": "activity id",
+            "required": true
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "activity": {
+                  "type": "object",
+                  "properties": {
+                    "title": {
+                      "type": "string",
+                      "example": "Atividade"
+                    },
+                    "caption": {
+                      "type": "string",
+                      "example": "Atividade em sala"
+                    },
+                    "description": {
+                      "type": "string",
+                      "example": "primeira atividade em sala de aula"
+                    },
+                    "motivation": {
+                      "type": "string",
+                      "example": "Ensinamentos basicos"
+                    },
+                    "powerful_ideas": {
+                      "type": "string",
+                      "example": "Ideias"
+                    },
+                    "products": {
+                      "type": "string",
+                      "example": "Produtos"
+                    },
+                    "requirements": {
+                      "type": "string",
+                      "example": "Inglês"
+                    },
+                    "published": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "version_history": {
+                      "type": "string",
+                      "example": "1.0"
+                    },
+                    "copyright": {
+                      "type": "string",
+                      "example": "rbac"
+                    },
+                    "space_organization": {
+                      "type": "string",
+                      "example": "Precisa de projetor para realizar a atividade"
+                    },
+                    "implementation_steps": {
+                      "type": "string",
+                      "example": "Primeiramente ler a apostila pagina 2"
+                    },
+                    "implementation_tips": {
+                      "type": "string",
+                      "example": "Realizar a atividade durante o dia"
+                    },
+                    "reflection_assessment": {
+                      "type": "string",
+                      "example": "Avaliar o comportamento do aluno"
+                    },
+                    "duration": {
+                      "type": "string",
+                      "example": "cerca de 30 minutos"
+                    },
+                    "references": {
+                      "type": "string",
+                      "example": "Referências bibliograficas"
+                    },
+                    "is_abac_author": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "external_link": {
+                      "type": "string",
+                      "example": "https://scholar.google.com.br/"
+                    },
+                    "external_authors": {
+                      "type": "array",
+                      "example": [
+                        "Pedro",
+                        "João da silva",
+                        "Osvaldo"
+                      ]
+                    },
+                    "activity_type": {
+                      "type": "string",
+                      "description": "Activity type",
+                      "enum": [
+                        "internal",
+                        "external"
+                      ],
+                      "default": "internal"
+                    },
+                    "license_id": {
+                      "type": "string",
+                      "example": "c6a92130-6d30-42f6-93c0-245acf360152"
+                    },
+                    "scope_ids": {
+                      "type": "array",
+                      "example": [
+                        "c6a92130-6d30-42f6-93c0-245acf360152"
+                      ]
+                    },
+                    "audience_ids": {
+                      "type": "array",
+                      "example": [
+                        "3b11f1db-e8c2-4379-beb7-0ba7f993e23a",
+                        "93f8345c-3e87-4485-9dfb-2a1102252020"
+                      ]
+                    },
+                    "person_ids": {
+                      "type": "array",
+                      "example": [
+                        "3b11f1db-e8c2-4379-beb7-0ba7f993e23a"
+                      ]
+                    },
+                    "space_type_ids": {
+                      "type": "array",
+                      "example": [
+                        "df1f4ff2-c167-44b9-9b3d-50d51e909e2d"
+                      ]
+                    },
+                    "specific_materials": {
+                      "type": "string",
+                      "example": "Cola e tesoura sem ponta"
+                    },
+                    "general_materials": {
+                      "type": "array",
+                      "example": [
+                        {
+                          "id": "9c65a353-497a-42ed-9631-38f68c6862b0",
+                          "quantity": 11
+                        }
+                      ]
+                    },
+                    "image": {
+                      "type": "string",
+                      "example": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP0Y/hfDwADvwHOEMGxZAAAAABJRU5ErkJggg=="
+                    },
+                    "inspirations_ids": {
+                      "type": "array",
+                      "example": [
+                        "819d249c-e536-43df-b688-1b9ca72eec72"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "title",
+                    "caption",
+                    "description",
+                    "motivation",
+                    "powerful_ideas",
+                    "products",
+                    "requirements",
+                    "published",
+                    "version_history",
+                    "copyright",
+                    "space_organization",
+                    "duration",
+                    "implementation_stepsscope_ids",
+                    "audience_ids",
+                    "person_ids",
+                    "space_type_ids",
+                    "general_materials"
+                  ]
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Activity remixed",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/activities_object"
+                  }
+                }
+              },
+              "required": [
+                "data"
+              ]
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "404": {
+            "description": "Activity Not Found",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "422": {
+            "description": "Entity error",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          }
+        }
+      }
+    },
+    "/gallery/v1/activities/{id}/implement": {
+      "post": {
+        "summary": "Implemented this activity",
+        "tags": [
+          "Activities"
+        ],
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "description": "I implemented this activity",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "description": "activity id",
+            "required": true
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "date_implementation": {
+                  "type": "string",
+                  "example": "2019-05-01"
+                },
+                "place_implementation": {
+                  "type": "string",
+                  "example": "MIT"
+                },
+                "number_participants": {
+                  "type": "integer",
+                  "example": 10
+                },
+                "description": {
+                  "type": "string",
+                  "example": "Implementação em classe"
+                },
+                "person_ids": {
+                  "type": "array",
+                  "example": [
+                    "3b11f1db-e8c2-4379-beb7-0ba7f993e23a"
+                  ]
+                }
+              },
+              "required": [
+                "date_implementation"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Activity implemented",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/activities_object"
+                  }
+                }
+              },
+              "required": [
+                "data"
+              ]
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "404": {
+            "description": "Activity Not Found",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "422": {
+            "description": "Entity error",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          }
+        }
+      }
+    },
+    "/gallery/v1/activities/{id}/likes": {
+      "get": {
+        "summary": "Get likes a activity",
+        "tags": [
+          "Activities"
+        ],
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Get likes a activity",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "description": "activity id",
+            "required": true
+          },
+          {
+            "name": "per",
+            "in": "query",
+            "type": "integer",
+            "description": "results per page",
+            "default": 10,
+            "required": false
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "type": "integer",
+            "description": "page",
+            "default": 1,
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/like_objects"
+                  }
+                },
+                "links": {
+                  "type": "object",
+                  "properties": {
+                    "self": {
+                      "type": "string",
+                      "format": "url",
+                      "example": "//gallery/v1/activities?page[number]=1&page[size]=10"
+                    },
+                    "first": {
+                      "type": "string",
+                      "format": "url",
+                      "example": "//gallery/v1/activities?page[number]=1&page[size]=10"
+                    },
+                    "prev": {
+                      "type": "string",
+                      "format": "url",
+                      "example": null
+                    },
+                    "next": {
+                      "type": "string",
+                      "format": "url",
+                      "example": "//gallery/v1/activities?page[number]=2&page[size]=10"
+                    },
+                    "last": {
+                      "type": "string",
+                      "format": "url",
+                      "example": "//gallery/v1/activities?page[number]=10&page[size]=10"
+                    }
+                  },
+                  "required": [
+                    "self",
+                    "first",
+                    "last"
+                  ]
+                },
+                "meta": {
+                  "$ref": "#/definitions/meta_pagination_object"
+                }
+              },
+              "required": [
+                "data"
+              ]
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "404": {
+            "description": "Activity Not Found",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          }
+        }
+      }
+    },
+    "/gallery/v1/activities/{id}/implementations": {
+      "get": {
+        "summary": "Get implementations a activity",
+        "tags": [
+          "Activities"
+        ],
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Get implementations a activity",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "description": "activity id",
+            "required": true
+          },
+          {
+            "name": "per",
+            "in": "query",
+            "type": "integer",
+            "description": "results per page",
+            "default": 10,
+            "required": false
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "type": "integer",
+            "description": "page",
+            "default": 1,
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/implementation_objects"
+                  }
+                },
+                "links": {
+                  "type": "object",
+                  "properties": {
+                    "self": {
+                      "type": "string",
+                      "format": "url",
+                      "example": "//gallery/v1/activities?page[number]=1&page[size]=10"
+                    },
+                    "first": {
+                      "type": "string",
+                      "format": "url",
+                      "example": "//gallery/v1/activities?page[number]=1&page[size]=10"
+                    },
+                    "prev": {
+                      "type": "string",
+                      "format": "url",
+                      "example": null
+                    },
+                    "next": {
+                      "type": "string",
+                      "format": "url",
+                      "example": "//gallery/v1/activities?page[number]=2&page[size]=10"
+                    },
+                    "last": {
+                      "type": "string",
+                      "format": "url",
+                      "example": "//gallery/v1/activities?page[number]=10&page[size]=10"
+                    }
+                  },
+                  "required": [
+                    "self",
+                    "first",
+                    "last"
+                  ]
+                },
+                "meta": {
+                  "$ref": "#/definitions/meta_pagination_object"
+                }
+              },
+              "required": [
+                "data"
+              ]
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "404": {
+            "description": "Activity Not Found",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          }
+        }
+      }
+    },
+    "/gallery/v1/activities/{id}/comment": {
+      "post": {
+        "summary": "Comment a activity",
+        "tags": [
+          "Activities"
+        ],
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Comment a activity",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "description": "activity id",
+            "required": true
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "text": {
+                  "type": "string",
+                  "example": "Comments"
+                }
+              },
+              "required": [
+                "text"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Comment ok",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/activities_object"
+                  }
+                }
+              },
+              "required": [
+                "data"
+              ]
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "404": {
+            "description": "Activity Not Found",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          }
+        }
+      }
+    },
+    "/gallery/v1/audiences/": {
+      "get": {
+        "summary": "Get Audiences",
+        "tags": [
+          "Audiences"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Get Audiences",
+        "parameters": [
+          {
+            "name": "per",
+            "in": "query",
+            "type": "integer",
+            "description": "results per page",
+            "default": 10,
+            "required": false
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "type": "integer",
+            "description": "page",
+            "default": 1,
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Audiences found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/audiences_object"
+                  }
+                },
+                "links": {
+                  "type": "object",
+                  "properties": {
+                    "self": {
+                      "type": "string",
+                      "format": "url",
+                      "example": "//gallery/v1/audiences?page[number]=1&page[size]=10"
+                    },
+                    "first": {
+                      "type": "string",
+                      "format": "url",
+                      "example": "//gallery/v1/audiences?page[number]=1&page[size]=10"
+                    },
+                    "prev": {
+                      "type": "string",
+                      "format": "url",
+                      "example": null
+                    },
+                    "next": {
+                      "type": "string",
+                      "format": "url",
+                      "example": "//gallery/v1/audiences?page[number]=2&page[size]=10"
+                    },
+                    "last": {
+                      "type": "string",
+                      "format": "url",
+                      "example": "//gallery/v1/audiences?page[number]=10&page[size]=10"
+                    }
+                  },
+                  "required": [
+                    "self",
+                    "first",
+                    "last"
+                  ]
+                },
+                "meta": {
+                  "$ref": "#/definitions/meta_pagination_object"
+                }
+              },
+              "required": [
+                "data",
+                "links",
+                "meta"
+              ]
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          }
+        }
+      }
+    },
+    "/gallery/v1/audiences": {
+      "post": {
+        "summary": "Create a Audience",
+        "tags": [
+          "Audiences"
+        ],
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Create a Audience",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "audience": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "example": "Crianças"
+                    },
+                    "description": {
+                      "type": "string",
+                      "example": "Crianças"
+                    }
+                  },
+                  "required": [
+                    "name"
+                  ]
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Audience create",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/audiences_object"
+                  }
+                }
+              },
+              "required": [
+                "data"
+              ]
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "422": {
+            "description": "Entity error",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          }
+        }
+      }
+    },
+    "/gallery/v1/audiences/{id}": {
+      "put": {
+        "summary": "Update a Audience",
+        "tags": [
+          "Audiences"
+        ],
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Update a Audience",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "description": "audience id",
+            "required": true
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "scope": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "example": "Crianças"
+                    },
+                    "description": {
+                      "type": "string",
+                      "example": "Crianças"
+                    }
+                  },
+                  "required": [
+                    "name"
+                  ]
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Audience update",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/audiences_object"
+                  }
+                }
+              },
+              "required": [
+                "data"
+              ]
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "404": {
+            "description": "Audience Not Found",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "422": {
+            "description": "Entity error",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Get a Audience",
+        "tags": [
+          "Audiences"
+        ],
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Get a Audience",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "description": "audience id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Audience found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/audiences_object"
+                  }
+                }
+              },
+              "required": [
+                "data"
+              ]
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "404": {
+            "description": "Audience Not Found",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a Audience",
+        "tags": [
+          "Audiences"
+        ],
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Delete a Audience",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "description": "audience id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Audience delete"
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "404": {
+            "description": "Audience Not Found",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          }
+        }
+      }
+    },
+    "/gallery/v1/general_materials/": {
+      "get": {
+        "summary": "Get General Materials",
+        "tags": [
+          "General Materials"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "description": "General Materials",
+        "parameters": [
+          {
+            "name": "per",
+            "in": "query",
+            "type": "integer",
+            "description": "results per page",
+            "default": 10,
+            "required": false
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "type": "integer",
+            "description": "page",
+            "default": 1,
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "General Materials found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/general_materials_objects"
+                  }
+                },
+                "links": {
+                  "type": "object",
+                  "properties": {
+                    "self": {
+                      "type": "string",
+                      "format": "url",
+                      "example": "//gallery/v1/general_materials/?page[number]=1&page[size]=10"
+                    },
+                    "first": {
+                      "type": "string",
+                      "format": "url",
+                      "example": "//gallery/v1/general_materials/?page[number]=1&page[size]=10"
+                    },
+                    "prev": {
+                      "type": "string",
+                      "format": "url",
+                      "example": null
+                    },
+                    "next": {
+                      "type": "string",
+                      "format": "url",
+                      "example": "//gallery/v1/general_materials/?page[number]=2&page[size]=10"
+                    },
+                    "last": {
+                      "type": "string",
+                      "format": "url",
+                      "example": "//gallery/v1/general_materials/?page[number]=10&page[size]=10"
+                    }
+                  },
+                  "required": [
+                    "self",
+                    "first",
+                    "last"
+                  ]
+                },
+                "meta": {
+                  "$ref": "#/definitions/meta_pagination_object"
+                }
+              },
+              "required": [
+                "data",
+                "links",
+                "meta"
+              ]
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          }
+        }
+      }
+    },
+    "/gallery/v1/general_materials": {
+      "post": {
+        "summary": "Create a General Material",
+        "tags": [
+          "General Materials"
+        ],
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Create a General Material",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "general_material": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "example": "Cartolina"
+                    },
+                    "description": {
+                      "type": "string",
+                      "example": "Cartolina para ser usada em atividades"
+                    }
+                  },
+                  "required": [
+                    "title"
+                  ]
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "General Material create",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/general_materials_objects"
+                  }
+                }
+              },
+              "required": [
+                "data"
+              ]
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "422": {
+            "description": "Entity error",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          }
+        }
+      }
+    },
+    "/gallery/v1/general_materials/{id}": {
+      "put": {
+        "summary": "Update a General Material",
+        "tags": [
+          "General Materials"
+        ],
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Update a General Material",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "description": "general material id",
+            "required": true
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "general_material": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "example": "Cartolina"
+                    },
+                    "description": {
+                      "type": "string",
+                      "example": "Cartolina para ser usada em atividades"
+                    }
+                  },
+                  "required": [
+                    "title"
+                  ]
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "General Material update",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/general_materials_objects"
+                  }
+                }
+              },
+              "required": [
+                "data"
+              ]
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "404": {
+            "description": "General Material Not Found",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "422": {
+            "description": "Entity error",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Get a General Material",
+        "tags": [
+          "General Materials"
+        ],
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Get a General Material",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "description": "general material id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "General Material found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/general_materials_object"
+                  }
+                }
+              },
+              "required": [
+                "data"
+              ]
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "404": {
+            "description": "General Material Not Found",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a General Material",
+        "tags": [
+          "General Materials"
+        ],
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Delete a General Materia",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "description": "general material id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "General Materia delete"
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "404": {
+            "description": "General Materia Not Found",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          }
+        }
+      }
+    },
+    "/gallery/v1/licenses/": {
+      "get": {
+        "summary": "Get Licenses",
+        "tags": [
+          "Licenses"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Get Licenses",
+        "parameters": [
+          {
+            "name": "per",
+            "in": "query",
+            "type": "integer",
+            "description": "results per page",
+            "default": 10,
+            "required": false
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "type": "integer",
+            "description": "page",
+            "default": 1,
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Licenses found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/licenses_object"
+                  }
+                },
+                "links": {
+                  "type": "object",
+                  "properties": {
+                    "self": {
+                      "type": "string",
+                      "format": "url",
+                      "example": "//gallery/v1/licenses?page[number]=1&page[size]=10"
+                    },
+                    "first": {
+                      "type": "string",
+                      "format": "url",
+                      "example": "//gallery/v1/licenses?page[number]=1&page[size]=10"
+                    },
+                    "prev": {
+                      "type": "string",
+                      "format": "url",
+                      "example": null
+                    },
+                    "next": {
+                      "type": "string",
+                      "format": "url",
+                      "example": "//gallery/v1/licenses?page[number]=2&page[size]=10"
+                    },
+                    "last": {
+                      "type": "string",
+                      "format": "url",
+                      "example": "//gallery/v1/licenses?page[number]=10&page[size]=10"
+                    }
+                  },
+                  "required": [
+                    "self",
+                    "first",
+                    "last"
+                  ]
+                },
+                "meta": {
+                  "$ref": "#/definitions/meta_pagination_object"
+                }
+              },
+              "required": [
+                "data",
+                "links",
+                "meta"
+              ]
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          }
+        }
+      }
+    },
+    "/gallery/v1/licenses": {
+      "post": {
+        "summary": "Create a License",
+        "tags": [
+          "Licenses"
+        ],
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Create a License",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "license": {
+                  "type": "object",
+                  "properties": {
+                    "title": {
+                      "type": "string",
+                      "example": "License 1"
+                    },
+                    "acronym": {
+                      "type": "string",
+                      "example": "L1"
+                    },
+                    "version": {
+                      "type": "string",
+                      "example": "v1"
+                    },
+                    "description": {
+                      "type": "string",
+                      "example": "Scope 1"
+                    },
+                    "external_link": {
+                      "type": "string",
+                      "example": "www.domain.com"
+                    }
+                  },
+                  "required": [
+                    "title",
+                    "description"
+                  ]
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "License create",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/licenses_object"
+                  }
+                }
+              },
+              "required": [
+                "data"
+              ]
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "422": {
+            "description": "Entity error",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          }
+        }
+      }
+    },
+    "/gallery/v1/licenses/{id}": {
+      "put": {
+        "summary": "Update a License",
+        "tags": [
+          "Licenses"
+        ],
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Update a License",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "description": "license id",
+            "required": true
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "license": {
+                  "type": "object",
+                  "properties": {
+                    "title": {
+                      "type": "string",
+                      "example": "License 1"
+                    },
+                    "acronym": {
+                      "type": "string",
+                      "example": "L1"
+                    },
+                    "version": {
+                      "type": "string",
+                      "example": "v1"
+                    },
+                    "description": {
+                      "type": "string",
+                      "example": "Scope 1"
+                    },
+                    "external_link": {
+                      "type": "string",
+                      "example": "www.domain.com"
+                    }
+                  },
+                  "required": [
+                    "title"
+                  ]
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "License update",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/licenses_object"
+                  }
+                }
+              },
+              "required": [
+                "data"
+              ]
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "404": {
+            "description": "License Not Found",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "422": {
+            "description": "Entity error",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Get a License",
+        "tags": [
+          "Licenses"
+        ],
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Get a License",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "description": "license id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "License found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/licenses_object"
+                  }
+                }
+              },
+              "required": [
+                "data"
+              ]
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "404": {
+            "description": "License Not Found",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a License",
+        "tags": [
+          "Licenses"
+        ],
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Delete a License",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "description": "license id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "License delete"
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "404": {
+            "description": "License Not Found",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          }
+        }
+      }
+    },
+    "/gallery/v1/scopes/": {
+      "get": {
+        "summary": "Get Scopes",
+        "tags": [
+          "Scopes"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Get Scopes",
+        "parameters": [
+          {
+            "name": "per",
+            "in": "query",
+            "type": "integer",
+            "description": "results per page",
+            "default": 10,
+            "required": false
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "type": "integer",
+            "description": "page",
+            "default": 1,
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Scopes found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/scopes_object"
+                  }
+                },
+                "links": {
+                  "type": "object",
+                  "properties": {
+                    "self": {
+                      "type": "string",
+                      "format": "url",
+                      "example": "//gallery/v1/scopes?page[number]=1&page[size]=10"
+                    },
+                    "first": {
+                      "type": "string",
+                      "format": "url",
+                      "example": "//gallery/v1/scopes?page[number]=1&page[size]=10"
+                    },
+                    "prev": {
+                      "type": "string",
+                      "format": "url",
+                      "example": null
+                    },
+                    "next": {
+                      "type": "string",
+                      "format": "url",
+                      "example": "//gallery/v1/scopes?page[number]=2&page[size]=10"
+                    },
+                    "last": {
+                      "type": "string",
+                      "format": "url",
+                      "example": "//gallery/v1/scopes?page[number]=10&page[size]=10"
+                    }
+                  },
+                  "required": [
+                    "self",
+                    "first",
+                    "last"
+                  ]
+                },
+                "meta": {
+                  "$ref": "#/definitions/meta_pagination_object"
+                }
+              },
+              "required": [
+                "data",
+                "links",
+                "meta"
+              ]
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          }
+        }
+      }
+    },
+    "/gallery/v1/scopes": {
+      "post": {
+        "summary": "Create a Scope",
+        "tags": [
+          "Scopes"
+        ],
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Create a Scope",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "scope": {
+                  "type": "object",
+                  "properties": {
+                    "title": {
+                      "type": "string",
+                      "example": "Scope 1"
+                    },
+                    "description": {
+                      "type": "string",
+                      "example": "Scope 1"
+                    }
+                  },
+                  "required": [
+                    "title"
+                  ]
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Scope create",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/scopes_object"
+                  }
+                }
+              },
+              "required": [
+                "data"
+              ]
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "422": {
+            "description": "Entity error",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          }
+        }
+      }
+    },
+    "/gallery/v1/scopes/{id}": {
+      "put": {
+        "summary": "Update a Scope",
+        "tags": [
+          "Scopes"
+        ],
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Update a Scope",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "description": "scope id",
+            "required": true
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "scope": {
+                  "type": "object",
+                  "properties": {
+                    "title": {
+                      "type": "string",
+                      "example": "Scope 1"
+                    },
+                    "description": {
+                      "type": "string",
+                      "example": "Scope 1"
+                    }
+                  },
+                  "required": [
+                    "title"
+                  ]
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Scope update",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/scopes_object"
+                  }
+                }
+              },
+              "required": [
+                "data"
+              ]
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "404": {
+            "description": "Scope Not Found",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "422": {
+            "description": "Entity error",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Get a Scope",
+        "tags": [
+          "Scopes"
+        ],
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Get a Scope",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "description": "scope id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Scope found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/scopes_object"
+                  }
+                }
+              },
+              "required": [
+                "data"
+              ]
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "404": {
+            "description": "Scope Not Found",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a Scope",
+        "tags": [
+          "Scopes"
+        ],
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Delete a Scope",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "description": "scope id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Scope delete"
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "404": {
+            "description": "Scope Not Found",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          }
+        }
+      }
+    },
+    "/gallery/v1/space_types/": {
+      "get": {
+        "summary": "Get Space Types",
+        "tags": [
+          "Space Types"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Get Space Types",
+        "parameters": [
+          {
+            "name": "per",
+            "in": "query",
+            "type": "integer",
+            "description": "results per page",
+            "default": 10,
+            "required": false
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "type": "integer",
+            "description": "page",
+            "default": 1,
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Space Types found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/space_types_object"
+                  }
+                },
+                "links": {
+                  "type": "object",
+                  "properties": {
+                    "self": {
+                      "type": "string",
+                      "format": "url",
+                      "example": "//gallery/v1/space_types/?page[number]=1&page[size]=10"
+                    },
+                    "first": {
+                      "type": "string",
+                      "format": "url",
+                      "example": "//gallery/v1/space_types/?page[number]=1&page[size]=10"
+                    },
+                    "prev": {
+                      "type": "string",
+                      "format": "url",
+                      "example": null
+                    },
+                    "next": {
+                      "type": "string",
+                      "format": "url",
+                      "example": "//gallery/v1/space_types/?page[number]=2&page[size]=10"
+                    },
+                    "last": {
+                      "type": "string",
+                      "format": "url",
+                      "example": "//gallery/v1/space_types/?page[number]=10&page[size]=10"
+                    }
+                  },
+                  "required": [
+                    "self",
+                    "first",
+                    "last"
+                  ]
+                },
+                "meta": {
+                  "$ref": "#/definitions/meta_pagination_object"
+                }
+              },
+              "required": [
+                "data",
+                "links",
+                "meta"
+              ]
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          }
+        }
+      }
+    },
+    "/gallery/v1/space_types": {
+      "post": {
+        "summary": "Create a Space Type",
+        "tags": [
+          "Space Types"
+        ],
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Create a Space Type",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "space_type": {
+                  "type": "object",
+                  "properties": {
+                    "title": {
+                      "type": "string",
+                      "example": "Sala de aula"
+                    },
+                    "description": {
+                      "type": "string",
+                      "example": "Sala de aula com projetor"
+                    }
+                  },
+                  "required": [
+                    "title"
+                  ]
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Space Type create",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/space_types_object"
+                  }
+                }
+              },
+              "required": [
+                "data"
+              ]
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "422": {
+            "description": "Entity error",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          }
+        }
+      }
+    },
+    "/gallery/v1/space_types/{id}": {
+      "put": {
+        "summary": "Update a Space Type",
+        "tags": [
+          "Space Types"
+        ],
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Update a Space Type",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "description": "space type id",
+            "required": true
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "space_type": {
+                  "type": "object",
+                  "properties": {
+                    "title": {
+                      "type": "string",
+                      "example": "Sala de aula"
+                    },
+                    "description": {
+                      "type": "string",
+                      "example": "Sala de aula com projetor"
+                    }
+                  },
+                  "required": [
+                    "title"
+                  ]
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Space Type update",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/space_types_object"
+                  }
+                }
+              },
+              "required": [
+                "data"
+              ]
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "404": {
+            "description": "Space Type Not Found",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "422": {
+            "description": "Entity error",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Get a Space Type",
+        "tags": [
+          "Space Types"
+        ],
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Get a Space Type",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "description": "space type id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Space Type found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/space_types_object"
+                  }
+                }
+              },
+              "required": [
+                "data"
+              ]
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "404": {
+            "description": "Space Type Not Found",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a Space Type",
+        "tags": [
+          "Space Types"
+        ],
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Delete a Space Type",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "description": "space type id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Space Type delete"
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "404": {
+            "description": "Space Type Not Found",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          }
+        }
+      }
+    },
+    "/user/v1/people/": {
+      "get": {
+        "summary": "Get People",
+        "tags": [
+          "People"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Get People",
+        "parameters": [
+          {
+            "name": "per",
+            "in": "query",
+            "type": "integer",
+            "description": "results per page",
+            "default": 10,
+            "required": false
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "type": "integer",
+            "description": "page",
+            "default": 1,
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "People found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/people_object"
+                  }
+                },
+                "links": {
+                  "type": "object",
+                  "properties": {
+                    "self": {
+                      "type": "string",
+                      "format": "url",
+                      "example": "//gallery/v1/people?page[number]=1&page[size]=10"
+                    },
+                    "first": {
+                      "type": "string",
+                      "format": "url",
+                      "example": "//gallery/v1/people?page[number]=1&page[size]=10"
+                    },
+                    "prev": {
+                      "type": "string",
+                      "format": "url",
+                      "example": null
+                    },
+                    "next": {
+                      "type": "string",
+                      "format": "url",
+                      "example": "//gallery/v1/people?page[number]=2&page[size]=10"
+                    },
+                    "last": {
+                      "type": "string",
+                      "format": "url",
+                      "example": "//gallery/v1/people?page[number]=10&page[size]=10"
+                    }
+                  },
+                  "required": [
+                    "self",
+                    "first",
+                    "last"
+                  ]
+                },
+                "meta": {
+                  "$ref": "#/definitions/meta_pagination_object"
+                }
+              },
+              "required": [
+                "data",
+                "links",
+                "meta"
+              ]
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          }
+        }
+      }
+    },
+    "/user/v1/people/{id}": {
+      "get": {
+        "summary": "Get a Person",
+        "tags": [
+          "People"
+        ],
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Get a person",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "description": "person id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Person found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/people_object"
+                  }
+                }
+              },
+              "required": [
+                "data"
+              ]
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "404": {
+            "description": "Person Not Found",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          }
+        }
+      }
+    },
+    "/user/v1/people/favorites/activities": {
+      "get": {
+        "summary": "Get favorites activities",
+        "tags": [
+          "People"
+        ],
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Get favorites activities logged user",
+        "responses": {
+          "200": {
+            "description": "Activities found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/activities_object"
+                  }
+                },
+                "links": {
+                  "type": "object",
+                  "properties": {
+                    "self": {
+                      "type": "string",
+                      "format": "url",
+                      "example": "//gallery/v1/activities?page[number]=1&page[size]=10"
+                    },
+                    "first": {
+                      "type": "string",
+                      "format": "url",
+                      "example": "//gallery/v1/activities?page[number]=1&page[size]=10"
+                    },
+                    "prev": {
+                      "type": "string",
+                      "format": "url",
+                      "example": null
+                    },
+                    "next": {
+                      "type": "string",
+                      "format": "url",
+                      "example": "//gallery/v1/activities?page[number]=2&page[size]=10"
+                    },
+                    "last": {
+                      "type": "string",
+                      "format": "url",
+                      "example": "//gallery/v1/activities?page[number]=10&page[size]=10"
+                    }
+                  },
+                  "required": [
+                    "self",
+                    "first",
+                    "last"
+                  ]
+                },
+                "meta": {
+                  "$ref": "#/definitions/meta_pagination_object"
+                }
+              },
+              "required": [
+                "data"
+              ]
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "404": {
+            "description": "Person Not Found",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          }
+        }
+      }
+    },
+    "/user/v1/people/implementations/activities": {
+      "get": {
+        "summary": "Get user's implementated activities ",
+        "tags": [
+          "People"
+        ],
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Get logged user's implementated activities",
+        "responses": {
+          "200": {
+            "description": "Activities found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/activities_object"
+                  }
+                },
+                "links": {
+                  "type": "object",
+                  "properties": {
+                    "self": {
+                      "type": "string",
+                      "format": "url",
+                      "example": "//gallery/v1/activities?page[number]=1&page[size]=10"
+                    },
+                    "first": {
+                      "type": "string",
+                      "format": "url",
+                      "example": "//gallery/v1/activities?page[number]=1&page[size]=10"
+                    },
+                    "prev": {
+                      "type": "string",
+                      "format": "url",
+                      "example": null
+                    },
+                    "next": {
+                      "type": "string",
+                      "format": "url",
+                      "example": "//gallery/v1/activities?page[number]=2&page[size]=10"
+                    },
+                    "last": {
+                      "type": "string",
+                      "format": "url",
+                      "example": "//gallery/v1/activities?page[number]=10&page[size]=10"
+                    }
+                  },
+                  "required": [
+                    "self",
+                    "first",
+                    "last"
+                  ]
+                },
+                "meta": {
+                  "$ref": "#/definitions/meta_pagination_object"
+                }
+              },
+              "required": [
+                "data"
+              ]
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "404": {
+            "description": "Person Not Found",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          }
+        }
+      }
+    },
+    "/user/v1/people/current_user/activities": {
+      "get": {
+        "summary": "Get activities inserted by or where current user is author",
+        "tags": [
+          "People"
+        ],
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Get activities inserted by or where current user is author",
+        "responses": {
+          "200": {
+            "description": "Activities found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/activities_object"
+                  }
+                },
+                "links": {
+                  "type": "object",
+                  "properties": {
+                    "self": {
+                      "type": "string",
+                      "format": "url",
+                      "example": "//gallery/v1/activities?page[number]=1&page[size]=10"
+                    },
+                    "first": {
+                      "type": "string",
+                      "format": "url",
+                      "example": "//gallery/v1/activities?page[number]=1&page[size]=10"
+                    },
+                    "prev": {
+                      "type": "string",
+                      "format": "url",
+                      "example": null
+                    },
+                    "next": {
+                      "type": "string",
+                      "format": "url",
+                      "example": "//gallery/v1/activities?page[number]=2&page[size]=10"
+                    },
+                    "last": {
+                      "type": "string",
+                      "format": "url",
+                      "example": "//gallery/v1/activities?page[number]=10&page[size]=10"
+                    }
+                  },
+                  "required": [
+                    "self",
+                    "first",
+                    "last"
+                  ]
+                },
+                "meta": {
+                  "$ref": "#/definitions/meta_pagination_object"
+                }
+              },
+              "required": [
+                "data",
+                "links",
+                "meta"
+              ]
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          }
+        }
+      }
+    },
+    "/user/v1/people/{id}/activities": {
+      "get": {
+        "summary": "Get activities inserted by or where specified user is author",
+        "tags": [
+          "People"
+        ],
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Get activities inserted by or where specified user is author",
+        "responses": {
+          "200": {
+            "description": "Activities found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/activities_object"
+                  }
+                },
+                "links": {
+                  "type": "object",
+                  "properties": {
+                    "self": {
+                      "type": "string",
+                      "format": "url",
+                      "example": "//gallery/v1/activities?page[number]=1&page[size]=10"
+                    },
+                    "first": {
+                      "type": "string",
+                      "format": "url",
+                      "example": "//gallery/v1/activities?page[number]=1&page[size]=10"
+                    },
+                    "prev": {
+                      "type": "string",
+                      "format": "url",
+                      "example": null
+                    },
+                    "next": {
+                      "type": "string",
+                      "format": "url",
+                      "example": "//gallery/v1/activities?page[number]=2&page[size]=10"
+                    },
+                    "last": {
+                      "type": "string",
+                      "format": "url",
+                      "example": "//gallery/v1/activities?page[number]=10&page[size]=10"
+                    }
+                  },
+                  "required": [
+                    "self",
+                    "first",
+                    "last"
+                  ]
+                },
+                "meta": {
+                  "$ref": "#/definitions/meta_pagination_object"
+                }
+              },
+              "required": [
+                "data",
+                "links",
+                "meta"
+              ]
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/error_object"
+            }
+          }
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "Bearer": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header"
+    }
+  },
+  "definitions": {
+    "meta_pagination_object": {
+      "type": "object",
+      "properties": {
+        "current_page": {
+          "type": "integer",
+          "example": 1
+        },
+        "next_page": {
+          "type": "integer",
+          "example": 2
+        },
+        "prev_page": {
+          "type": "integer",
+          "example": null
+        },
+        "total_pages": {
+          "type": "integer",
+          "example": 10
+        },
+        "total_count": {
+          "type": "integer",
+          "example": 100
+        }
+      },
+      "required": [
+        "current_page",
+        "total_pages",
+        "total_count"
+      ]
+    },
+    "activities_object": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "715bd60f-4f85-453f-84dd-ac2fe74e16ae"
+        },
+        "type": {
+          "type": "string",
+          "example": "gallery-activities"
+        },
+        "attributes": {
+          "$ref": "#/definitions/activity_object"
+        }
+      },
+      "required": [
+        "id",
+        "type",
+        "attributes"
+      ]
+    },
+    "activity_object": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "example": "Atividade"
+        },
+        "caption": {
+          "type": "string",
+          "example": "Atividade em sala"
+        },
+        "description": {
+          "type": "string",
+          "example": "Primeira atividade"
+        },
+        "motivation": {
+          "type": "string",
+          "example": "Ensinamentos basicos"
+        },
+        "powerful_ideas": {
+          "type": "string",
+          "example": "Ideias"
+        },
+        "products": {
+          "type": "string",
+          "example": "Produtos"
+        },
+        "requirements": {
+          "type": "string",
+          "example": "Ingles"
+        },
+        "published": {
+          "type": "boolean",
+          "example": true
+        },
+        "version_history": {
+          "type": "string",
+          "example": "1.0"
+        },
+        "copyright": {
+          "type": "string",
+          "example": "rbac"
+        },
+        "space_organization": {
+          "type": "string",
+          "example": "Precisa de projetor para realizar a atividade"
+        },
+        "implementation_steps": {
+          "type": "string",
+          "example": "Primeiramente ler a apostila pagina 2"
+        },
+        "implementation_tips": {
+          "type": "string",
+          "example": "Realizar a atividade durante o dia"
+        },
+        "reflection_assessment": {
+          "type": "string",
+          "example": "Avaliar o comportamento do aluno"
+        },
+        "duration": {
+          "type": "string",
+          "example": "Cerca de 30 minutos"
+        },
+        "references": {
+          "type": "string",
+          "example": "Referências bibliograficas"
+        },
+        "remixed": {
+          "type": "string",
+          "example": "no"
+        },
+        "activity_type": {
+          "type": "string",
+          "example": "internal"
+        },
+        "liked": {
+          "type": "boolean",
+          "example": true
+        },
+        "favorited": {
+          "type": "boolean",
+          "example": true
+        },
+        "implemented": {
+          "type": "boolean",
+          "example": true
+        },
+        "license": {
+          "$ref": "#/definitions/licenses_object"
+        },
+        "scopes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/scopes_object"
+          }
+        },
+        "audiences": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/audiences_object"
+          }
+        },
+        "inspirations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/inspiration_object"
+          }
+        },
+        "is_abac_author": {
+          "type": "boolean",
+          "example": false
+        },
+        "authors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/person_object"
+          }
+        },
+        "inserted_by": {
+          "$ref": "#/definitions/person_object"
+        },
+        "external_authors": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "example": [
+            "João da Silva",
+            "Pedro Henrique"
+          ]
+        },
+        "external_link": {
+          "type": "string",
+          "example": "https://scholar.google.com.br/"
+        },
+        "space_types": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/space_type_object"
+          }
+        },
+        "specific_materials": {
+          "type": "string",
+          "example": "Cola e tesoura sem ponta"
+        },
+        "general_materials": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "example": "d33b9dd0-d8f9-432a-af0a-56cdbc9146ff"
+              },
+              "name": {
+                "type": "string",
+                "example": "Cartolina"
+              },
+              "description": {
+                "type": "string",
+                "example": "Cartolina para ser usada em atividades"
+              },
+              "quantity": {
+                "type": "string",
+                "example": 11
+              }
+            }
+          }
+        },
+        "images": {
+          "$ref": "#/definitions/image_object"
+        },
+        "comments": {
+          "$ref": "#/definitions/comment_object"
+        },
+        "remixes": {
+          "$ref": "#/activity_remixes"
+        },
+        "likes": {
+          "$ref": "#/definitions/like_object"
+        },
+        "implementations": {
+          "$ref": "#/definitions/implementation_object"
+        },
+        "total_implementations": {
+          "type": "integer",
+          "example": 10
+        },
+        "total_likes": {
+          "type": "integer",
+          "example": 10
+        },
+        "total_favorites": {
+          "type": "integer",
+          "example": 10
+        },
+        "total_remixes": {
+          "type": "integer",
+          "example": 10
+        },
+        "total_comments": {
+          "type": "integer",
+          "example": 10
+        },
+        "created_at": {
+          "type": "string",
+          "example": "2019-07-15T15:49:38.072-03:00"
+        },
+        "updated_at": {
+          "type": "string",
+          "example": "2019-07-15T15:49:38.072-03:00"
+        }
+      },
+      "required": [
+        "title"
+      ]
+    },
+    "licenses_object": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "1758b1cc-ae2f-41c1-9d40-5c6bc7bdc807"
+        },
+        "type": {
+          "type": "string",
+          "example": "gallery-licenses"
+        },
+        "attributes": {
+          "$ref": "#/definitions/license_object"
+        }
+      },
+      "required": [
+        "id",
+        "type",
+        "attributes"
+      ]
+    },
+    "license_object": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "example": "License 1"
+        },
+        "acronym": {
+          "type": "string",
+          "example": "L1"
+        },
+        "version": {
+          "type": "string",
+          "example": "v1"
+        },
+        "description": {
+          "type": "string",
+          "example": "Scope 1"
+        },
+        "external_link": {
+          "type": "string",
+          "example": "www.domain.com"
+        }
+      },
+      "required": [
+        "title",
+        "description"
+      ]
+    },
+    "scopes_object": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "1758b1cc-ae2f-41c1-9d40-5c6bc7bdc807"
+        },
+        "type": {
+          "type": "string",
+          "example": "gallery-scopes"
+        },
+        "attributes": {
+          "$ref": "#/definitions/scope_object"
+        }
+      },
+      "required": [
+        "id",
+        "type",
+        "attributes"
+      ]
+    },
+    "scope_object": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "example": "Scope 1"
+        },
+        "description": {
+          "type": "string",
+          "example": "Scope 1"
+        }
+      },
+      "required": [
+        "title"
+      ]
+    },
+    "audiences_object": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "93f8345c-3e87-4485-9dfb-2a1102252020"
+        },
+        "type": {
+          "type": "string",
+          "example": "gallery-audiences"
+        },
+        "attributes": {
+          "$ref": "#/definitions/audience_object"
+        }
+      },
+      "required": [
+        "id",
+        "type",
+        "attributes"
+      ]
+    },
+    "audience_object": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Crianças"
+        },
+        "description": {
+          "type": "string",
+          "example": "Crianças"
+        }
+      },
+      "required": [
+        "title"
+      ]
+    },
+    "people_object": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "f963962d-405e-4be8-93f4-ff90a85ad347"
+        },
+        "type": {
+          "type": "string",
+          "example": "user-people"
+        },
+        "attributes": {
+          "$ref": "#/definitions/person_object"
+        }
+      },
+      "required": [
+        "id",
+        "type",
+        "attributes"
+      ]
+    },
+    "person_object": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Pedro"
+        },
+        "email": {
+          "type": "string",
+          "example": "pedro123@gmail.com"
+        },
+        "birthday": {
+          "type": "string",
+          "example": "1980-10-10"
+        }
+      },
+      "required": [
+        "name",
+        "email"
+      ]
+    },
+    "error_object": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "object",
+          "properties": {
+            "lang": {
+              "type": "string",
+              "example": "en",
+              "description": "Error Language"
+            },
+            "message": {
+              "type": "string",
+              "example": "Friendly Message",
+              "description": "Message to Show the User."
+            },
+            "internal_message": {
+              "type": "string",
+              "example": "Bad things are happening.",
+              "description": "Internal Message for Developer Control"
+            },
+            "status": {
+              "type": "string",
+              "example": "000",
+              "description": "HTTP Status Code"
+            }
+          },
+          "required": [
+            "lang",
+            "message",
+            "internal_message",
+            "status"
+          ]
+        }
+      }
+    },
+    "space_types_object": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "df1f4ff2-c167-44b9-9b3d-50d51e909e2d"
+        },
+        "type": {
+          "type": "string",
+          "example": "gallery-space-types"
+        },
+        "attributes": {
+          "$ref": "#/definitions/space_type_object"
+        }
+      },
+      "required": [
+        "id",
+        "type",
+        "attributes"
+      ]
+    },
+    "space_type_object": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "example": "Sala de aula"
+        },
+        "description": {
+          "type": "string",
+          "example": "Sala de aula com projetor"
+        }
+      },
+      "required": [
+        "title"
+      ]
+    },
+    "specific_materials_objects": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "063ef0fd-4c82-475f-b50e-dd10326423b3"
+        },
+        "type": {
+          "type": "string",
+          "example": "gallery-specific-materials"
+        },
+        "attributes": {
+          "$ref": "#/definitions/specific_materials_object"
+        }
+      },
+      "required": [
+        "id",
+        "type",
+        "attributes"
+      ]
+    },
+    "specific_materials_object": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Tesoura sem ponta"
+        },
+        "quantity": {
+          "type": "integer",
+          "example": 1
+        },
+        "description": {
+          "type": "string",
+          "example": "Tesoura para ser usada na atividade"
+        }
+      },
+      "required": [
+        "name",
+        "quantity"
+      ]
+    },
+    "general_materials_objects": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "6bea14a4-0e33-4d05-a015-df79ca9a3559"
+        },
+        "type": {
+          "type": "string",
+          "example": "gallery-general-materials"
+        },
+        "attributes": {
+          "$ref": "#/definitions/general_materials_object"
+        }
+      },
+      "required": [
+        "id",
+        "type",
+        "attributes"
+      ]
+    },
+    "general_materials_object": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Cartolina"
+        },
+        "description": {
+          "type": "string",
+          "example": "Cartolina para ser usada em atividades"
+        },
+        "quantity": {
+          "type": "integer",
+          "example": 10
+        }
+      },
+      "required": [
+        "name",
+        "description"
+      ]
+    },
+    "image_object": {
+      "type": "object",
+      "properties": {
+        "original": {
+          "type": "string",
+          "example": "https://s3-sa-east-1.amazonaws.com/api-rbac/noimage.jpg"
+        },
+        "medium": {
+          "type": "string",
+          "example": "https://s3-sa-east-1.amazonaws.com/api-rbac/noimage.jpg"
+        },
+        "square": {
+          "type": "string",
+          "example": "https://s3-sa-east-1.amazonaws.com/api-rbac/noimage.jpg"
+        },
+        "thumbnail": {
+          "type": "string",
+          "example": "https://s3-sa-east-1.amazonaws.com/api-rbac/noimage.jpg"
+        }
+      }
+    },
+    "inspiration_object": {
+      "properties": {
+        "activity_two_id": {
+          "type": "string",
+          "example": "819d249c-e536-43df-b688-1b9ca72eec72"
+        },
+        "title": {
+          "type": "string",
+          "example": "Atividade 1"
+        }
+      }
+    },
+    "like_objects": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "6bea14a4-0e33-4d05-a015-df79ca9a3559"
+        },
+        "type": {
+          "type": "string",
+          "example": "experience-likes"
+        },
+        "attributes": {
+          "$ref": "#/definitions/like_object"
+        }
+      },
+      "required": [
+        "id",
+        "type",
+        "attributes"
+      ]
+    },
+    "like_object": {
+      "type": "object",
+      "properties": {
+        "person": {
+          "$ref": "#/definitions/person_object"
+        }
+      }
+    },
+    "implementation_objects": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "6bea14a4-0e33-4d05-a015-df79ca9a3559"
+        },
+        "type": {
+          "type": "string",
+          "example": "experience-implementation"
+        },
+        "attributes": {
+          "$ref": "#/definitions/implementation_object"
+        }
+      },
+      "required": [
+        "id",
+        "type",
+        "attributes"
+      ]
+    },
+    "implementation_object": {
+      "type": "object",
+      "properties": {
+        "person": {
+          "$ref": "#/definitions/person_object"
+        },
+        "description": {
+          "type": "string",
+          "example": "Implementação em classe"
+        },
+        "date_implementation": {
+          "type": "string",
+          "example": "2019-05-05"
+        },
+        "place_implementation": {
+          "type": "string",
+          "example": "Sala de aula"
+        },
+        "number_participants": {
+          "type": "integer",
+          "example": 10
+        },
+        "authors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/person_object"
+          }
+        }
+      }
+    },
+    "comment_objects": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "6bea14a4-0e33-4d05-a015-df79ca9a3559"
+        },
+        "type": {
+          "type": "string",
+          "example": "experience-comments"
+        },
+        "attributes": {
+          "$ref": "#/definitions/comment_object"
+        }
+      },
+      "required": [
+        "id",
+        "type",
+        "attributes"
+      ]
+    },
+    "comment_object": {
+      "type": "object",
+      "properties": {
+        "person": {
+          "$ref": "#/definitions/person_object"
+        },
+        "text": {
+          "type": "string",
+          "example": "Comment"
+        },
+        "created_at": {
+          "type": "string",
+          "example": "2019-01-01"
+        }
+      }
+    }
+  },
+  "activity_remixes": {
+    "type": "object",
+    "properties": {
+      "id": {
+        "type": "string",
+        "example": "974c67d9-24ef-4952-b8cd-f24c5a56bb2b"
+      },
+      "activity": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "9c3d580c-7c1c-4c20-af40-043cca8c92e5"
+          },
+          "title": {
+            "type": "string",
+            "example": "primeira Atividade a ser remixada"
+          },
+          "caption": {
+            "type": "string",
+            "example": "Atividade em sala"
+          },
+          "description": {
+            "type": "string",
+            "example": "primeira atividade em sala de aula"
+          },
+          "motivation": {
+            "type": "string",
+            "example": "Ensinamentos basicos"
+          },
+          "powerful_ideas": {
+            "type": "string",
+            "example": "Ideias"
+          },
+          "products": {
+            "type": "string",
+            "example": "Produtos"
+          },
+          "requirements": {
+            "type": "string",
+            "example": "Inglês"
+          },
+          "published": {
+            "type": "boolean",
+            "example": true
+          },
+          "version_history": {
+            "type": "string",
+            "example": "1.0"
+          },
+          "copyright": {
+            "type": "string",
+            "example": "rbac"
+          },
+          "space_organization": {
+            "type": "string",
+            "example": "Precisa de projetor para realizar a atividade"
+          },
+          "implementation_steps": {
+            "type": "string",
+            "example": "Primeiramente ler a apostila pagina 2"
+          },
+          "implementation_tips": {
+            "type": "string",
+            "example": "Realizar a atividade durante o dia"
+          },
+          "reflection_assessment": {
+            "type": "string",
+            "example": "Avaliar o comportamento do aluno"
+          },
+          "duration": {
+            "type": "string",
+            "example": "cerca de 30 minutos"
+          },
+          "references": {
+            "type": "string",
+            "example": "Referências bibliograficas"
+          },
+          "remixed": {
+            "type": "string",
+            "example": "yes"
+          },
+          "activity_type": {
+            "type": "string",
+            "example": "internal"
+          },
+          "liked": {
+            "type": "boolean",
+            "example": true
+          },
+          "favorited": {
+            "type": "boolean",
+            "example": true
+          },
+          "implemented": {
+            "type": "boolean",
+            "example": true
+          },
+          "audiences": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/audiences_object"
+            }
+          },
+          "inspirations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/inspiration_object"
+            }
+          },
+          "is_abac_author": {
+            "type": "boolean",
+            "example": false
+          },
+          "authors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/person_object"
+            }
+          },
+          "inserted_by": {
+            "$ref": "#/definitions/person_object"
+          },
+          "external_authors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": [
+              "João da Silva",
+              "Pedro Henrique"
+            ]
+          },
+          "external_link": {
+            "type": "string",
+            "example": "https://scholar.google.com.br/"
+          },
+          "space_types": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/space_type_object"
+            }
+          },
+          "specific_materials": {
+            "type": "string",
+            "example": "Cola e tesoura sem ponta"
+          },
+          "general_materials": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "example": "d33b9dd0-d8f9-432a-af0a-56cdbc9146ff"
+                },
+                "name": {
+                  "type": "string",
+                  "example": "Cartolina"
+                },
+                "description": {
+                  "type": "string",
+                  "example": "Cartolina para ser usada em atividades"
+                },
+                "quantity": {
+                  "type": "string",
+                  "example": 11
+                }
+              }
+            }
+          },
+          "images": {
+            "$ref": "#/definitions/image_object"
+          },
+          "comments": {
+            "$ref": "#/definitions/comment_object"
+          },
+          "remixes": {
+            "$ref": "#/activity_remixes"
+          },
+          "likes": {
+            "$ref": "#/definitions/like_object"
+          },
+          "implementations": {
+            "$ref": "#/definitions/implementation_object"
+          },
+          "license": {
+            "$ref": "#/definitions/license_object"
+          },
+          "total_implementations": {
+            "type": "integer",
+            "example": 10
+          },
+          "total_likes": {
+            "type": "integer",
+            "example": 10
+          },
+          "total_favorites": {
+            "type": "integer",
+            "example": 10
+          },
+          "total_remixes": {
+            "type": "integer",
+            "example": 10
+          },
+          "total_comments": {
+            "type": "integer",
+            "example": 10
+          },
+          "created_at": {
+            "type": "date",
+            "example": "2019-06-28T20:10:14.543Z"
+          },
+          "updated_at": {
+            "type": "date",
+            "example": "2019-06-28T20:10:16.173Z"
+          }
+        }
+      }
+    }
+  }
+}
